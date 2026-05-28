@@ -131,3 +131,31 @@ Append-only. New decisions go at the bottom; revisions reference and supersede p
 ## D-024 · Update channel default
 
 - New users default to **stable** (`[gamerx-core]`).
+
+
+## D-025 · GPG signing identity (P2)
+
+- Master key UID: `GamerX OS Repository Signing Key (https://github.com/GamerXECO-sys55/gamerx-os) <gamerx-os@gamerxeco-sys55.users.noreply.github.com>`
+- Master fingerprint: `3C7C0F0E E2EC008D 417FA2D6 4354EA4A AA4736D3`
+- Master key type: RSA-4096, no expiration, kept at `~/.config/gamerx-os/gpg/` (chmod 700)
+- Signing subkey: RSA-4096, no expiration. Will be exported to CI for automated signing in P5.
+- Date: 2026-05-28
+
+## D-026 · Mirror hosting URL pattern (P2)
+
+- Pacman mirrorlist points at:
+  `https://github.com/GamerXECO-sys55/gamerx-repo/releases/download/$repo-$arch`
+- This means each `[gamerx-core]` and `[gamerx-testing]` channel maps to a GitHub release tag named `core-x86_64` / `testing-x86_64`.
+- Decision: keep tag names channel-arch pattern so we can add architectures cleanly later.
+
+## D-027 · Theme CLI design (P2)
+
+- Implemented in Python 3 (no compile step, easy for users to read and modify).
+- State stored at `~/.config/gamerx/state.toml`.
+- Renderers live under `/usr/share/gamerx-theme/renderers/`, shipped by `gamerx-shell` in P3 — keeps the CLI package tiny and decouples the theme engine from individual component configs.
+- Why Python (not Rust/Go): the CLI is glue, not a hot loop. Python ships in `gamerx-meta` already. Trades a 50ms startup for orders of magnitude less code to maintain.
+
+## D-028 · Meta package philosophy (P2)
+
+- `gamerx-meta` lists ~110 packages explicitly. Yes, namcap warns "Dependency included, but may not be needed" for every one — that's the whole point of a meta package.
+- Decision: do not split into sub-meta-packages (e.g. `gamerx-base`, `gamerx-desktop`, `gamerx-cli-tools`). The flat list is easier to audit and the warning is documented as expected.

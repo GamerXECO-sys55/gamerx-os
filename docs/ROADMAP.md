@@ -28,15 +28,17 @@ A phased plan from empty repo to a bootable ISO on a flash drive.
 - [x] `os-release` template (vanilla + Aria) + `lsb-release` + `issue`
 - [x] Pushed to `gamerx-branding`
 
-## Phase 2 · Core packages ⏳
+## Phase 2 · Core packages ✅
 
-- [ ] `gamerx-keyring` PKGBUILD (master GPG key for the repo)
-- [ ] `gamerx-mirrorlist` PKGBUILD (initial mirror list)
-- [ ] `gamerx-branding` PKGBUILD (deploys logos, /etc/os-release, GRUB theme assets)
-- [ ] `gamerx-tweaks` PKGBUILD (sysctl, zram, ananicy rules)
-- [ ] `gamerx-meta` PKGBUILD (depends on the curated install set)
-- [ ] `gamerx-meta-aria` PKGBUILD (Aria edition)
-- [ ] `gamerx-theme` PKGBUILD (the CLI)
+- [x] `gamerx-keyring` PKGBUILD (master GPG key for the repo)
+- [x] `gamerx-mirrorlist` PKGBUILD (initial mirror list)
+- [x] `gamerx-branding` PKGBUILD (deploys logos, /etc/os-release, GRUB theme assets)
+- [x] `gamerx-tweaks` PKGBUILD (sysctl, zram, ananicy rules)
+- [x] `gamerx-meta` PKGBUILD (depends on the curated install set)
+- [x] `gamerx-meta-aria` PKGBUILD (Aria edition)
+- [x] `gamerx-theme` PKGBUILD (the CLI)
+- [x] All 7 packages build cleanly with namcap clean modulo documented sandbox warnings
+- [x] Theme CLI smoke-tested: show / get / set / list / validation all functional
 
 ## Phase 3 · gamerx-shell ⏳
 
