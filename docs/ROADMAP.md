@@ -76,15 +76,17 @@ A phased plan from empty repo to a bootable ISO on a flash drive.
 - [x] `scripts/sign_and_publish.sh` is idempotent — re-run any time to refresh the channel
 - [ ] CI automation (lands in P9)
 
-## Phase 6 · ISO profile ⏳
+## Phase 6 · ISO profile ✅
 
-- [ ] Fork archiso `releng` profile into `gamerx-iso`
-- [ ] `packages.x86_64` final list
-- [ ] `airootfs/` overlay (live user, autologin, GamerX-themed live session)
-- [ ] `pacman.conf` with `[gamerx-core]` enabled
-- [ ] Boot loaders: GRUB (BIOS + UEFI), systemd-boot fallback
-- [ ] Test: ISO boots in QEMU/UTM
-- [ ] Test: ISO boots on real flash drive
+- [x] Fork archiso `releng` profile into `gamerx-iso`
+- [x] `profiledef.sh` rebranded — iso_name `gamerx-os`, label `GAMERX_<YYYYMM>`, install_dir `gamerx`
+- [x] `pacman.conf` includes `[gamerx-core]` channel pointing at our GitHub Releases
+- [x] `packages.x86_64` final list — full GamerX desktop stack + Calamares + 9 GamerX packages
+- [x] `airootfs/` overlay — live user `gamerx` (fish shell), passwordless sudo, SDDM autologin, NetworkManager + sddm enabled, /etc/skel ready, live autostart script
+- [x] Boot loaders: GRUB (BIOS + UEFI), syslinux fallback (inherited from releng)
+- [x] `scripts/build.sh` and `scripts/test-qemu.sh`
+- [ ] `mkarchiso` build run (manual: `sudo gamerx-iso/scripts/build.sh` — ~10-20 min, ~3 GB output)
+- [ ] QEMU boot test (manual after build)
 
 ## Phase 7 · Calamares ⏳
 
