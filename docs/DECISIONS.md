@@ -1,0 +1,133 @@
+# GamerX OS — Decision Log
+
+A running log of every locked decision and why we picked it.
+Append-only. New decisions go at the bottom; revisions reference and supersede previous entries.
+
+---
+
+## D-001 · Project name & identity
+
+- **Name**: GamerX OS
+- **Tagline**: *The agentic Arch.*
+- **Why**: Brand-led, owned by the user; the tagline owns the AI angle without sounding gimmicky.
+- **Date**: 2026-05-28
+
+## D-002 · Two editions, vanilla first
+
+- **Decision**: Build GamerX OS (vanilla) first; GamerX OS Aria is the same ISO with one extra repo and a few systemd units flipped on.
+- **Why**: Aria is a complete project of its own; the OS layer should not block on it.
+
+## D-003 · Versioning
+
+- **Format**: CalVer + codename (e.g. `26.06 "Nebula"`).
+- **Why**: Date in the filename for engineers; codename for marketing and theme story.
+
+## D-004 · Architecture targets
+
+- **v1.0**: x86_64
+- **v1.1**: x86_64-v3 (CachyOS-style optimized repo)
+- **v2.0**: aarch64 (deferred)
+
+## D-005 · Bootloader
+
+- **Pick**: GRUB (themed)
+- **Why**: User explicitly asked for themable GRUB. GRUB also pairs cleanly with `grub-btrfs` for snapshot rollback.
+
+## D-006 · Default kernel
+
+- **Pick**: linux-zen (default in installer, highlighted)
+- **Alternates installed by default**: linux-lts (always, safety net)
+- **Optional**: linux, linux-cachyos (selectable in installer)
+
+## D-007 · Filesystem
+
+- **Default**: Btrfs + zstd + snapper + grub-btrfs
+- **Alternative offered**: ext4
+- **snap-pac**: yes (snapshots before every `pacman -Syu`)
+- **Encryption**: LUKS2 toggle, default off
+
+## D-008 · Display stack
+
+- Hyprland + Quickshell (overlays, control center, launcher, OSD) + Waybar (status bar)
+- SDDM (themed greeter) + hyprlock + swaync + swww + walker
+
+## D-009 · Terminal & shell
+
+- Ghostty as the terminal
+- fish as the default user shell (autosuggestions, syntax highlighting OOTB)
+- zsh installed and one-click switchable
+- starship configured for both
+
+## D-010 · Hyprdots strategy
+
+- **Pick**: Build our own Quickshell-based shell from clean room.
+- **Why**: User asked for professionalism, not a fork or rebrand. We may study top dotfiles for technique but we ship original code.
+
+## D-011 · Theme single source of truth
+
+- **Pick**: A single `gamerx-theme` CLI; all UIs (Welcome, Tweaker, GamerX Settings) call it.
+- **Why**: Consistency, scriptability, makes Aria's "switch to Tokyo Night" trivial.
+
+## D-012 · Repo strategy
+
+- **Pick**: Split repos under `GamerXECO-sys55` user account.
+- **Repos**: `gamerx-os`, `gamerx-iso`, `gamerx-shell`, `gamerx-packages`, `gamerx-installer`, `gamerx-branding`, `gamerx-welcome`, `gamerx-repo`, `gamerx-docs`.
+- **Why**: User explicitly preferred split repos; easier to manage ownership and CI per concern.
+
+## D-013 · Repo channels
+
+- `[gamerx-core]` (stable) and `[gamerx-testing]` (dev)
+- Default channel: `[gamerx-core]`
+
+## D-014 · Repo hosting (v1)
+
+- GitHub Releases on `gamerx-repo`. Migrate to Cloudflare R2 + custom domain at v1.1 if needed.
+
+## D-015 · Defaults
+
+- Hostname: `gamerx-os`
+- Username: `gamerx`
+- Default user shell: fish
+
+## D-016 · Telemetry
+
+- **Strictly zero**, not configurable.
+
+## D-017 · License
+
+- Code: GPL-3.0
+- Branding/assets: CC-BY-NC-SA 4.0
+
+## D-018 · Asset generation strategy
+
+- v0 assets generated programmatically (SVG/code) by the build agent.
+- High-quality assets later, generated via Midjourney / Stable Diffusion / Flux by the user or Aria.
+- Placeholders explicitly marked in the repo.
+
+## D-019 · Performance defaults
+
+- zram + ananicy-cpp (cachyos rules) + earlyoom + GameMode + CachyOS sysctls
+- MangoHud installed but off by default.
+
+## D-020 · Welcome app & Settings scope
+
+- v1.0: Welcome app + lightweight GTK4 tweaker
+- v1.2: Native GamerX Settings (Tauri or GTK4) with full customization
+
+## D-021 · Aria reservations approved
+
+- Filesystem, user config, systemd, keybind, Waybar slot, D-Bus name, port 7173, meta package, welcome tile — all approved as drafted in the planning doc.
+
+## D-022 · Recovery
+
+- snap-pac auto-snapshots
+- grub-btrfs rollback entries
+- live ISO doubles as rescue with chroot tools
+
+## D-023 · Localization
+
+- Use Arch's full locale list; English default; user picks at install in Calamares.
+
+## D-024 · Update channel default
+
+- New users default to **stable** (`[gamerx-core]`).

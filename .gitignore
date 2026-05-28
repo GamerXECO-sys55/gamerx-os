@@ -1,0 +1,29 @@
+# Editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python (for build/utility scripts)
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# Build outputs
+build/
+dist/
+*.pkg.tar.zst
+*.pkg.tar.zst.sig
+
+# Local secrets — must never be committed
+.env
+.env.*
+*.token
+*.gpg
+*.asc
+secrets/
