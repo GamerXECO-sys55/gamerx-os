@@ -19,15 +19,14 @@ A phased plan from empty repo to a bootable ISO on a flash drive.
 - [x] Clone all 9 repos locally
 - [x] Scaffold meta `gamerx-os` repo (README, SPEC, ROADMAP, ARCHITECTURE, DECISIONS)
 
-## Phase 1 · Branding v0 🛠
+## Phase 1 · Branding v0 ✅
 
-- [ ] Generate v0 GamerX wordmark (SVG, geometric monogram)
-- [ ] Generate v0 orb mark (SVG, AI-leaning)
-- [ ] Define accent palette (cyan + magenta + GamerX purple)
-- [ ] Create 8 v0 wallpapers (3 cyberpunk, 2 abstract, 2 geometric, 1 photo) — placeholders sourced + later commissioned
-- [ ] `os-release` template with GamerX branding
-- [ ] `lsb-release` template
-- [ ] Push to `gamerx-branding`
+- [x] Generate v0 GamerX wordmark (SVG, geometric monogram)  ·  `logos/wordmark.svg` + light variant
+- [x] Generate v0 orb mark (SVG, AI-leaning)  ·  `logos/orb.svg` + mono variant
+- [x] Define accent palette (cyan + magenta + GamerX purple)  ·  `PALETTE.md` + 7 bundled palette TOMLs
+- [x] First v0 wallpaper "Aurora" + sourcing plan for the other 7 placeholders
+- [x] `os-release` template (vanilla + Aria) + `lsb-release` + `issue`
+- [x] Pushed to `gamerx-branding`
 
 ## Phase 2 · Core packages ⏳
 
