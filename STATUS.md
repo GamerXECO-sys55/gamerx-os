@@ -4,31 +4,46 @@ Live status of the project. Updated whenever a phase advances.
 
 | Field | Value |
 |---|---|
-| Current phase | **P4 — Boot-chain themes** (GRUB + Plymouth + SDDM + hyprlock theme polish) |
+| Current phase | **P5 — Repo signing & GitHub Releases publishing pipeline** |
 | Last updated | 2026-05-28 |
 | Next milestone | First themed live ISO that boots in QEMU |
 | Blocking | None |
 
 ## Recent activity
 
-- 2026-05-28 · **P3 complete.** End-to-end theme system shipping. Pushed to `gamerx-shell` and `gamerx-packages`:
-  - **Hyprland**: 9 modular configs (monitors, input, env, decoration, keybinds, rules, autostart, Aria reservations, density+animation include points). 3 density presets, 3 animation presets with a custom GamerX cubic-bezier(0.16, 1, 0.3, 1).
-  - **Status bar**: Waybar default + minimal styles (config.jsonc + style.css per style).
-  - **Launcher**: walker list + grid styles.
-  - **Notifications**: swaync default style with rich control center.
-  - **Lockscreen**: hyprlock template (palette tokens replaced by `60-hyprlock.sh` renderer).
-  - **Quickshell**: `shell.qml` + 4 modules (ControlCenter, PowerMenu, OSD, ThemeLoader). IPC target `gamerx` exposes toggle/show/reload functions.
-  - **Theme renderers**: `10-palette` → `80-wallpaper`. State.toml → theme.json → all components, hot-reloaded.
-  - **End-to-end test**: 9/9 checks pass. `gamerx-theme set palette tokyo-night ; set density compact ; set animation snappy ; set bar minimal ; set launcher grid` correctly propagates to every component.
-  - **PKGBUILD**: dual-mode (GitHub clone or `GAMERX_LOCAL_SRC` env override). 37 KB any-arch package, namcap clean.
-- 2026-05-28 · **P2 v0 complete.** 7 core packages built and pushed.
-- 2026-05-28 · **P1 v0 complete.** Branding pushed.
+- 2026-05-28 · **P4 complete.** Boot-chain themes shipped — pushed to `gamerx-branding` and `gamerx-packages`:
+  - **GRUB theme**: 1920x1080 aurora background (programmatic SVG → PNG), Inter wordmark/title, accented progress bar, tinted item boxes.
+  - **Plymouth theme**: pulsing duotone GamerX orb on aurora background. Single-script (no animation frame stack); 1.6 Hz sine pulse.
+  - **SDDM theme**: 480-line QML greeter with **four** background modes — `aurora` (procedural animated default, no asset cost), `image`, `video`, `gif`. hyprlock-style password card, palette-aware, video-backdrop ready.
+  - 3 new PKGBUILDs all dual-mode and namcap-clean.
+- 2026-05-28 · **P3 complete.** Theme system end-to-end (9/9 e2e checks pass).
+- 2026-05-28 · **P2 v0 complete.** 7 core packages.
+- 2026-05-28 · **P1 v0 complete.** Branding.
 - 2026-05-28 · **P0 complete.** Repos cleaned & created.
 
-## Next up — P4 boot-chain themes
+## Package inventory (built locally)
 
-1. GRUB theme (background, fonts, menu styling, brand mark)
-2. Plymouth animated theme (pulsing GamerX orb)
-3. SDDM theme (image / video / GIF backdrop, GamerX mark, palette-aware)
-4. hyprlock theme polish (already templated; iterate on visual)
-5. Each as its own PKGBUILD in `gamerx-packages/`
+| Package | Version | Size | Purpose |
+|---|---|---|---|
+| gamerx-keyring | 20260528-1 | 20K | Master GPG public key + trust |
+| gamerx-mirrorlist | 20260528-1 | 16K | Pacman mirrorlist |
+| gamerx-branding | 20260528-1 | 624K | Logos, palettes, wallpaper, /etc/os-release |
+| gamerx-tweaks | 20260528-1 | 17K | sysctl + zram + journald + makepkg + earlyoom |
+| gamerx-meta | 20260528-1 | 16K | Vanilla edition meta (~110 deps) |
+| gamerx-meta-aria | 20260528-1 | 15K | Aria edition meta |
+| gamerx-theme | 0.1.0-1 | 21K | Theme CLI |
+| gamerx-shell | 0.1.0-1 | 36K | Hyprland configs + Quickshell + renderers |
+| gamerx-grub-theme | 0.1.0-1 | 459K | GRUB theme |
+| gamerx-plymouth-theme | 0.1.0-1 | 517K | Plymouth boot animation |
+| gamerx-sddm-theme | 0.1.0-1 | 19K | SDDM greeter |
+
+**11 packages** total. Local build artifacts staged at `/home/gamerx/GamerX-OS/build/x86_64/`.
+
+## Next up — P5 repo signing & publishing
+
+1. Sign every `.pkg.tar.zst` with the master GPG key (or a dedicated subkey for CI).
+2. Run `repo-add gamerx-core.db.tar.zst <packages...>` to assemble the pacman DB.
+3. Create GitHub Release `core-x86_64` on `gamerx-repo`; upload all `.pkg.tar.zst`, `.sig`, and `.db.tar.zst` files.
+4. Document the user-facing setup in `gamerx-repo/README.md` (already done).
+5. Add `gamerx-repo`'s `[gamerx-core]` block to `gamerx-mirrorlist` source as the live URL.
+6. Smoke-test by adding the repo on this machine and `pacman -Sy` reading the DB.

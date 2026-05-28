@@ -57,13 +57,13 @@ A phased plan from empty repo to a bootable ISO on a flash drive.
 - [x] gamerx-shell PKGBUILD (dual-mode: GitHub or GAMERX_LOCAL_SRC), built clean
 - [x] Pushed to `gamerx-shell` and `gamerx-packages`
 
-## Phase 4 · Boot-chain themes ⏳
+## Phase 4 · Boot-chain themes ✅
 
-- [ ] GRUB theme
-- [ ] Plymouth theme (animated)
-- [ ] SDDM theme (image/video/GIF backgrounds)
-- [ ] hyprlock theme (matches SDDM)
-- [ ] Push to `gamerx-branding`
+- [x] GRUB theme — `gamerx-branding/themes/gamerx-grub-theme/` + `gamerx-grub-theme` PKGBUILD (459K)
+- [x] Plymouth theme — `gamerx-branding/themes/gamerx-plymouth-theme/` + `gamerx-plymouth-theme` PKGBUILD (517K, single-script pulsing orb)
+- [x] SDDM theme — `gamerx-branding/themes/gamerx-sddm-theme/` (Main.qml with animated aurora + hyprlock-style card) + `gamerx-sddm-theme` PKGBUILD (19K)
+- [x] hyprlock theme — already templated and rendered by P3
+- [x] All built, namcap clean, pushed to `gamerx-branding` and `gamerx-packages`
 
 ## Phase 5 · Repo infra ⏳
 
