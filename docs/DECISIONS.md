@@ -159,3 +159,21 @@ Append-only. New decisions go at the bottom; revisions reference and supersede p
 
 - `gamerx-meta` lists ~110 packages explicitly. Yes, namcap warns "Dependency included, but may not be needed" for every one — that's the whole point of a meta package.
 - Decision: do not split into sub-meta-packages (e.g. `gamerx-base`, `gamerx-desktop`, `gamerx-cli-tools`). The flat list is easier to audit and the warning is documented as expected.
+
+
+## D-029 · Renderers source `_lib.sh` relatively (P3)
+
+- Every renderer uses `. "$(dirname "$0")/_lib.sh"` instead of a hardcoded absolute path.
+- Reason: makes renderers usable from any install prefix (system, test harness, future containerized builds) without modification. The hardcoded path was failing in the first e2e test run; relative sourcing is more robust and equally correct under the official `/usr/share/gamerx-theme/renderers/` install path.
+
+## D-030 · gamerx-shell PKGBUILD dual-mode (P3)
+
+- The PKGBUILD honors `GAMERX_LOCAL_SRC` env var. When set, it copies from that path; when not, it does the standard `git+https://github.com/...` clone.
+- Reason: lets us iterate the shell repo and the PKGBUILD simultaneously without round-tripping through GitHub on every change. Identical contract to CachyOS's local-build helpers.
+
+## D-031 · Quickshell + Waybar split (P3, formal)
+
+- Quickshell hosts: ControlCenter, PowerMenu, OSD, ThemeLoader, future Aria overlay.
+- Waybar hosts: status bar (and only the status bar).
+- Communication path: `qs ipc call gamerx <handle>` invoked from Hyprland keybinds and Waybar buttons.
+- Theme propagation: every component reads `~/.config/gamerx/theme.json` written by `10-palette.sh`. Quickshell hot-reloads via `ThemeLoader` (FileView with watchChanges). Waybar/walker/swaync get symlinks swapped + hot-reload signals.

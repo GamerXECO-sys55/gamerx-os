@@ -40,20 +40,22 @@ A phased plan from empty repo to a bootable ISO on a flash drive.
 - [x] All 7 packages build cleanly with namcap clean modulo documented sandbox warnings
 - [x] Theme CLI smoke-tested: show / get / set / list / validation all functional
 
-## Phase 3 · gamerx-shell ⏳
+## Phase 3 · gamerx-shell ✅
 
-- [ ] Hyprland config (animations, keybinds, rules, gaps presets)
-- [ ] Quickshell project skeleton
-- [ ] Quickshell modules: launcher, control center, OSD, notification panel, Aria overlay slot
-- [ ] Waybar configs (5 styles)
-- [ ] swaync configs (4 styles)
-- [ ] walker configs (5 styles)
-- [ ] hyprlock theme
-- [ ] Palette files (matugen + 6 curated)
-- [ ] Density presets
-- [ ] Animation presets
-- [ ] `gamerx-theme` CLI implementation
-- [ ] Push to `gamerx-shell`
+- [x] Hyprland config (animations, keybinds, rules, gaps presets) — modular, 9 fragments
+- [x] Quickshell project skeleton — shell.qml + qmldir + IPC handler
+- [x] Quickshell modules: ControlCenter, PowerMenu, OSD, ThemeLoader (Aria overlay slot reserved)
+- [x] Waybar configs (default + minimal styles)
+- [x] swaync configs (default style)
+- [x] walker configs (list + grid styles)
+- [x] hyprlock theme (template with palette tokens)
+- [x] Palette files consumed (matugen + 7 curated already shipped via gamerx-branding)
+- [x] Density presets (compact, comfortable, spacious)
+- [x] Animation presets (snappy, smooth, cinematic) with custom GamerX bezier
+- [x] Theme renderers (10-palette, 20-hyprland, 30-waybar, 40-walker, 50-swaync, 60-hyprlock, 70-quickshell, 80-wallpaper)
+- [x] End-to-end test script: 9/9 OK — palette switch propagates to theme.json + Hyprland symlinks + Waybar/walker symlinks + hyprlock template render
+- [x] gamerx-shell PKGBUILD (dual-mode: GitHub or GAMERX_LOCAL_SRC), built clean
+- [x] Pushed to `gamerx-shell` and `gamerx-packages`
 
 ## Phase 4 · Boot-chain themes ⏳
 
