@@ -65,12 +65,16 @@ A phased plan from empty repo to a bootable ISO on a flash drive.
 - [x] hyprlock theme — already templated and rendered by P3
 - [x] All built, namcap clean, pushed to `gamerx-branding` and `gamerx-packages`
 
-## Phase 5 · Repo infra ⏳
+## Phase 5 · Repo infra ✅
 
-- [ ] Generate master GPG keypair (offline kept; subkeys for signing)
-- [ ] `gamerx-repo` GitHub Actions: build PKGBUILDs → sign → publish
-- [ ] `gamerx-repo` README with `pacman.conf` snippet for users
-- [ ] `gamerx-mirrorlist` final content
+- [x] Generate master GPG keypair (offline kept; subkeys for signing)
+- [x] All 11 packages signed locally
+- [x] `repo-add --sign` builds gamerx-core.db.tar.zst with signed db
+- [x] GitHub Release `gamerx-core-x86_64` created on `gamerx-repo` and populated
+- [x] `gamerx-repo` README rewritten with live install instructions
+- [x] **Verified end-to-end**: real `pacman -Sy` against the public URL fetches the db and lists all 11 packages
+- [x] `scripts/sign_and_publish.sh` is idempotent — re-run any time to refresh the channel
+- [ ] CI automation (lands in P9)
 
 ## Phase 6 · ISO profile ⏳
 

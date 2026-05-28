@@ -177,3 +177,17 @@ Append-only. New decisions go at the bottom; revisions reference and supersede p
 - Waybar hosts: status bar (and only the status bar).
 - Communication path: `qs ipc call gamerx <handle>` invoked from Hyprland keybinds and Waybar buttons.
 - Theme propagation: every component reads `~/.config/gamerx/theme.json` written by `10-palette.sh`. Quickshell hot-reloads via `ThemeLoader` (FileView with watchChanges). Waybar/walker/swaync get symlinks swapped + hot-reload signals.
+
+
+## D-032 · P5 publish pipeline (manual for v1.0)
+
+- `scripts/sign_and_publish.sh` is the source of truth. Steps: sign every .pkg.tar.zst in /home/gamerx/GamerX-OS/build/x86_64/, run `repo-add --sign --key <key>` to build gamerx-core.db.tar.zst, find-or-create the GitHub release `gamerx-core-x86_64` on `gamerx-repo`, delete-and-replace every asset (idempotent re-runs), upload `<plain>.db` and `<plain>.files` aliases for pacman compatibility.
+- Verified end-to-end: `sudo pacman --config <test.conf> -Sy && pacman -Sl gamerx-core` returns all 11 packages over the public URL.
+- CI automation deferred to P9. Manual is fine for v1.0 cadence.
+
+## D-033 · GitHub Release as pacman repo
+
+- Release tag pattern: `<repo>-<arch>` e.g. `gamerx-core-x86_64`, `gamerx-testing-x86_64`.
+- Pacman fetches db via plain HTTPS using the URL pattern in `gamerx-mirrorlist`.
+- We upload BOTH `<repo>.db.tar.zst` and the alias `<repo>.db` (same content, different filename) because pacman tries `.db` first by historical convention.
+- Same applies to `.files` and `.sig` siblings.
