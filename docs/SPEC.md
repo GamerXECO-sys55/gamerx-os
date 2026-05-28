@@ -56,7 +56,7 @@ in `DECISIONS.md`.
 - **Lockscreen**: hyprlock (themed to match GamerX brand and SDDM)
 - **Notifications**: swaync (multiple style presets)
 - **Wallpaper engine**: swww default. mpvpaper auto-loaded only when the user picks a video wallpaper.
-- **Launcher**: walker (multiple styles: compact / list / mac-style / grid; blur, transparency configurable)
+- **Launcher**: rofi-wayland (multiple styles: list / grid; blur, transparency configurable)
 - **File manager**: Nautilus with selectable icon packs (Papirus default; Tela, Reversal, etc. selectable; user import supported)
 - **Terminal**: Ghostty
 - **Shells**: fish (default) and zsh both installed; one-click switch via GamerX Settings; both pre-configured with starship
@@ -77,7 +77,7 @@ in `DECISIONS.md`.
 - Shell tools: `nano`, `vim`, `fastfetch`, `btop`, `git`, `curl`, `wget`, `unzip`, `zip`, `p7zip`, `tar`, `rsync`, `openssh`, `ufw`
 - Modern Unix toolbelt: `eza`, `bat`, `ripgrep`, `fd`, `fzf`, `zoxide`, `lazygit`, `tealdeer`
 - Fonts: `noto-fonts`, `noto-fonts-emoji`, `ttf-jetbrains-mono-nerd`, `ttf-firacode-nerd`, `ttf-cascadia-code-nerd`
-- Hyprland stack: `hyprland`, `quickshell`, `waybar`, `walker`, `swaync`, `swww`, `hyprlock`, `hypridle`, `xdg-desktop-portal-hyprland`, `polkit-kde-agent`
+- Hyprland stack: `hyprland`, `quickshell`, `waybar`, `rofi-wayland`, `swaync`, `swww`, `hyprlock`, `hypridle`, `xdg-desktop-portal-hyprland`, `polkit-kde-agent`
 - Theme tools: `matugen`, `papirus-icon-theme`
 - Audio control: `pavucontrol`, `pamixer`, `playerctl`
 - Display: `brightnessctl`, `wl-clipboard`, `cliphist`, `grim`, `slurp`, `swappy`, `wf-recorder`
@@ -162,7 +162,7 @@ in `DECISIONS.md`.
 | Filesystem | Btrfs + zstd + snapper + grub-btrfs |
 | Encryption | Off (toggle in installer) |
 | Bar | Waybar |
-| Launcher | walker |
+| Launcher | rofi-wayland |
 | Notifications | swaync |
 | Wallpaper engine | swww |
 | Lockscreen | hyprlock |

@@ -4,29 +4,29 @@ Live status of the project. Updated whenever a phase advances.
 
 | Field | Value |
 |---|---|
-| Current phase | **P6 done (profile shipped); awaiting first `mkarchiso` build** |
+| Current phase | **P6 in progress — ISO builds + boots, polishing live session** |
 | Last updated | 2026-05-28 |
-| Next milestone | First themed live ISO that boots in QEMU |
-| Blocking | None — `sudo bash gamerx-iso/scripts/build.sh` is a manual step |
+| Next milestone | First themed live ISO with Calamares auto-launching cleanly |
+| Blocking | None — manual rebuild + QEMU test loop |
 
 ## Recent activity
 
-- 2026-05-28 · **P6 ISO profile shipped.** `gamerx-iso` repo now contains a complete archiso profile forked from `releng` and rebranded:
-  - `profiledef.sh`: iso_name `gamerx-os`, label `GAMERX_<YYYYMM>`, install_dir `gamerx`.
-  - `pacman.conf`: includes our live `[gamerx-core]` channel.
-  - `packages.x86_64`: full GamerX desktop stack — Hyprland, Quickshell, Waybar, walker, swaync, swww, hyprlock, ghostty, fish, Nautilus + 9 GamerX packages + Calamares + Btrfs/snapper.
-  - `airootfs/`: live user `gamerx` (uid 1000, fish shell), passwordless sudo, SDDM autologin into Hyprland with theme=gamerx, NetworkManager + sddm enabled via real systemd symlinks, /etc/skel populated to source modular shell configs, /usr/local/bin/gamerx-live-autostart bootstraps theme state on first login.
-  - `scripts/build.sh` (sudo wrapper around mkarchiso) + `scripts/test-qemu.sh` (KVM/UEFI boot).
-- 2026-05-28 · **P5 complete.** Repo signing & publishing pipeline live, 11 packages on the channel, verified end-to-end with real pacman client.
-- 2026-05-28 · **P4 complete.** Boot-chain themes (GRUB, Plymouth, SDDM).
-- 2026-05-28 · **P3 complete.** Theme system end-to-end.
-- 2026-05-28 · **P2 v0 complete.** 7 core packages.
-- 2026-05-28 · **P1 v0 complete.** Branding.
-- 2026-05-28 · **P0 complete.** Repos cleaned & created.
+- 2026-05-28 · **P6 boot-chain rewrite (round 4).** Switched from per-file Hyprland exec-once tweaks to a single unified orchestrator script `/usr/bin/gamerx-shell-start` that:
+  - imports session env into systemd + dbus
+  - starts polkit, swww, Quickshell (with Waybar fallback if Quickshell crashes from Qt ABI mismatches), swaync, hypridle, cliphist, nm-applet
+  - detects `/etc/gamerx-live` marker → schedules welcome notification + auto-launches Calamares (via `sudo -E` since the live user has wheel NOPASSWD)
+  - logs everything to `~/.cache/gamerx-shell-start.log` for diagnosis
+- 2026-05-28 · **P6 root-cause fixes shipped:**
+  - mkinitcpio uses `/etc/mkinitcpio.conf.d/archiso.conf` (from `mkinitcpio-archiso`) — `customize_airootfs.sh` now patches it to insert `plymouth` after `udev` and adds KMS modules, then runs `mkinitcpio -P`.
+  - `scripts/build.sh` copies `unicode.pf2` from host into `grub/fonts/` before mkarchiso runs (mkarchiso doesn't auto-copy it; without it GRUB falls back to text mode).
+  - Hyprland `exec-once` lines using `&`, `&&`, `>` etc. were broken — Hyprland doesn't go through a shell. Replaced with single orchestrator call.
+  - Polkit rule for `gamerx` user lets Calamares run without password prompt on live ISO.
+- 2026-05-28 · **P5 publishing pipeline live.** 11 packages on `gamerx-core-x86_64`, 6 AUR packages on `gamerx-aur-x86_64` GitHub Releases. Verified end-to-end with real pacman client.
+- 2026-05-28 · **P0–P5 complete.** Repos cleaned & created, branding v0, 7 core packages, full theme system, boot-chain themes (GRUB/Plymouth/SDDM), repo signing & publishing.
 
-## Next up — first ISO build (manual) → P7 Calamares custom
+## Next up — close out P6 → P7 Calamares custom
 
-1. Run `sudo bash /home/gamerx/GamerX-OS/repos/gamerx-iso/scripts/build.sh`. Output: `out/gamerx-os-<calver>-x86_64.iso` (~3 GB, 10-20 min).
-2. Boot it in QEMU: `bash /home/gamerx/GamerX-OS/repos/gamerx-iso/scripts/test-qemu.sh`. Should land at SDDM, autologin into Hyprland with the GamerX shell.
-3. Iterate any visual issues spotted in the live boot.
+1. Rebuild ISO with the orchestrator changes.
+2. Boot in QEMU. Expected: branded GRUB, Plymouth pulsing orb for the full kernel boot, SDDM autologin, Hyprland with Waybar (or Quickshell if it survives), wallpaper, Calamares auto-opens.
+3. Iterate any remaining visual issues.
 4. **P7 Calamares custom**: re-skin Calamares (slideshow QML, branding QSS), add the kernel/browser/app-bundles/driver-detector custom modules.
